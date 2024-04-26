@@ -1,4 +1,4 @@
-> Open this page at [https://mathijs-04.github.io/cle4-sprint1/](https://mathijs-04.github.io/cle4-sprint1/)
+> Open this page at [https://mathijs-04.github.io/cle4-sprint1/](https://mathijs-04.github.io/gobbo-quest-v2/)
 
 ## Use as Extension
 
