@@ -33,6 +33,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, othe
     }
 })
 sprites.onDestroyed(SpriteKind.Boss, function (sprite) {
+    pause(500)
     music.stopAllSounds()
     game.gameOver(true)
 })
@@ -757,7 +758,7 @@ forever(function () {
             statusbars.getStatusBarAttachedTo(HP, Robbo).value = 100
             statusbars.getStatusBarAttachedTo(HP, Robbo).setColor(2, 15)
             Robbo.setPosition(120, 100)
-            Robbo.follow(Gobbo, 30)
+            Robbo.follow(Gobbo, 20)
         }
     }
 })
