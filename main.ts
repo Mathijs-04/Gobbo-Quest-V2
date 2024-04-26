@@ -3,9 +3,8 @@ namespace SpriteKind {
     export const Boss = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.enemyProjectile, function (sprite, otherSprite) {
-    sprites.destroy(sprite, effects.coolRadial, 10)
+    sprites.destroy(sprite, effects.disintegrate, 10)
     music.stopAllSounds()
-    music.play(music.createSong(assets.song`Game-over`), music.PlaybackMode.InBackground)
     pause(500)
     game.gameOver(false)
 })
@@ -47,14 +46,12 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.disintegrate, 10)
     music.stopAllSounds()
-    music.play(music.createSong(assets.song`Game-over`), music.PlaybackMode.InBackground)
     pause(500)
     game.gameOver(false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.disintegrate, 10)
     music.stopAllSounds()
-    music.play(music.createSong(assets.song`Game-over`), music.PlaybackMode.InBackground)
     pause(500)
     game.gameOver(false)
 })
