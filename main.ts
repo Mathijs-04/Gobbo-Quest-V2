@@ -21,14 +21,16 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
-    if (HP < 1) {
+    if (statusbars.getStatusBarAttachedTo(HP, Robbo).value < 1) {
         sprites.destroy(otherSprite, effects.fire, 10)
         sprites.destroy(projectile)
         if (otherSprite == Dino) {
             shootingEnemyAlive = 0
         }
     } else {
-        HP += -1
+        for (let index = 0; index < 1; index++) {
+            statusbars.getStatusBarAttachedTo(HP, Robbo).value += -2
+        }
     }
 })
 sprites.onDestroyed(SpriteKind.Boss, function (sprite) {
@@ -58,11 +60,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
 })
 let enemyShot: Sprite = null
 let statusbar: StatusBarSprite = null
-let Robbo: Sprite = null
 let arrowVar = 0
 let Reaper3: Sprite = null
 let Reaper2: Sprite = null
 let Reaper1: Sprite = null
+let Robbo: Sprite = null
 let HP = 0
 let projectile: Sprite = null
 let Dino: Sprite = null
@@ -171,7 +173,7 @@ let Reaper = sprites.create(img`
     ........................
     `, SpriteKind.Enemy)
 Reaper.setPosition(53, 111)
-Reaper.follow(Gobbo, 50)
+Reaper.follow(Gobbo, 40)
 game.onUpdateInterval(1000, function () {
     Bat.setVelocity(75, 75)
     timer.after(500, function () {
@@ -738,9 +740,9 @@ forever(function () {
             Reaper1.setPosition(100, 100)
             Reaper2.setPosition(120, 100)
             Reaper3.setPosition(140, 100)
-            Reaper1.follow(Gobbo, 30)
+            Reaper1.follow(Gobbo, 50)
             Reaper2.follow(Gobbo, 40)
-            Reaper3.follow(Gobbo, 50)
+            Reaper3.follow(Gobbo, 60)
         }
     }
 })
@@ -752,12 +754,11 @@ forever(function () {
             sprites.destroy(Reaper3)
             tiles.setCurrentTilemap(tilemap`level11`)
             Gobbo.setPosition(120, 180)
-            HP = 10
             Robbo = sprites.create(assets.image`Robbo-Front`, SpriteKind.Boss)
             statusbar = statusbars.create(20, 4, HP)
-            statusbar.setColor(7, 2)
-            statusbar.value = HP
             statusbar.attachToSprite(Robbo)
+            statusbars.getStatusBarAttachedTo(HP, Robbo).value = 100
+            statusbars.getStatusBarAttachedTo(HP, Robbo).setColor(2, 15)
             Robbo.setPosition(120, 100)
             Robbo.follow(Gobbo, 30)
         }
