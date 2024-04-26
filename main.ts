@@ -21,16 +21,19 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite, effects.fire, 10)
-    sprites.destroy(projectile)
-    if (otherSprite == Dino) {
-        shootingEnemyAlive = 0
+    if (HP < 1) {
+        sprites.destroy(otherSprite, effects.fire, 10)
+        sprites.destroy(projectile)
+        if (otherSprite == Dino) {
+            shootingEnemyAlive = 0
+        }
+    } else {
+        HP += -1
     }
 })
 sprites.onDestroyed(SpriteKind.Boss, function (sprite) {
     music.stopAllSounds()
     game.gameOver(true)
-    music.play(music.createSong(assets.song`Game-Won`), music.PlaybackMode.InBackground)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.fire, 10)
@@ -40,25 +43,27 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite, effects.coolRadial, 10)
+    sprites.destroy(sprite, effects.disintegrate, 10)
     music.stopAllSounds()
     music.play(music.createSong(assets.song`Game-over`), music.PlaybackMode.InBackground)
     pause(500)
     game.gameOver(false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
-    sprites.destroy(sprite, effects.coolRadial, 10)
+    sprites.destroy(sprite, effects.disintegrate, 10)
     music.stopAllSounds()
     music.play(music.createSong(assets.song`Game-over`), music.PlaybackMode.InBackground)
     pause(500)
     game.gameOver(false)
 })
 let enemyShot: Sprite = null
+let statusbar: StatusBarSprite = null
 let Robbo: Sprite = null
 let arrowVar = 0
 let Reaper3: Sprite = null
 let Reaper2: Sprite = null
 let Reaper1: Sprite = null
+let HP = 0
 let projectile: Sprite = null
 let Dino: Sprite = null
 let Gobbo: Sprite = null
@@ -747,7 +752,12 @@ forever(function () {
             sprites.destroy(Reaper3)
             tiles.setCurrentTilemap(tilemap`level11`)
             Gobbo.setPosition(120, 180)
+            HP = 10
             Robbo = sprites.create(assets.image`Robbo-Front`, SpriteKind.Boss)
+            statusbar = statusbars.create(20, 4, HP)
+            statusbar.setColor(7, 2)
+            statusbar.value = HP
+            statusbar.attachToSprite(Robbo)
             Robbo.setPosition(120, 100)
             Robbo.follow(Gobbo, 30)
         }
